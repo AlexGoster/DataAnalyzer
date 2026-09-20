@@ -26,3 +26,6 @@ python cli.py report data/sales.csv --output report.html
 ```
 
 MIT License - AlexGoster
+
+
+Last updated: 2026-09-20
