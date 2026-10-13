@@ -15,6 +15,7 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     packages=find_packages(exclude=["tests", "notebooks"]),
+    py_modules=["cli"],
     python_requires=">=3.9",
     install_requires=requirements,
     entry_points={

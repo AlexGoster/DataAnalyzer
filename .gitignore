@@ -3,3 +3,14 @@ __pycache__/
 .pytest_cache/
 output/
 *.html
+
+# Local verification artifacts
+.coverage
+htmlcov/
+coverage.xml
+*.db
+.env
+*.egg-info/
+.venv/
+build/
+dist/

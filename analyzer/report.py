@@ -2,6 +2,7 @@
 
 from pathlib import Path
 from datetime import datetime
+from html import escape
 import pandas as pd
 
 
@@ -10,6 +11,7 @@ class ReportGenerator:
         self.output_path = Path(output_path)
 
     def generate(self, df: pd.DataFrame, title: str = "Data Analysis Report") -> Path:
+        title = escape(title)
         stats = df.describe(include="all").to_html(classes="stats-table")
         nulls = df.isnull().sum().to_frame("nulls").to_html(classes="nulls-table")
         dtypes = df.dtypes.to_frame("dtype").to_html(classes="dtypes-table")

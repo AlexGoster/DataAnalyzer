@@ -47,16 +47,16 @@ python cli.py report data/sales.csv --output report.html
 
 ```bash
 # Базовый анализ
-python cli.py analyze data/employees.csv
+python cli.py analyze data/sales.csv
 
 # Только числовые столбцы
-python cli.py analyze data/sales.csv --numeric-only
+python cli.py analyze data/sales.csv
 
 # Сохранение графиков
-python cli.py visualize data/sales.csv --output ./charts --format png
+python cli.py visualize data/sales.csv --output ./charts
 
 # Полный отчёт
-python cli.py report data/customers.csv --output ./reports/customers.html
+python cli.py report data/sales.csv --output ./reports/customers.html
 ```
 
 ## Структура проекта
@@ -176,3 +176,18 @@ Last updated: 2026-09-27
 
 
 Last updated: 2026-09-27
+
+## Проверенный запуск
+
+Пример sales.csv включён в репозиторий и содержит синтетические данные.
+
+```bash
+python -m pip install -e .
+python cli.py analyze data/sales.csv
+python cli.py visualize data/sales.csv --output charts
+python cli.py report data/sales.csv --output reports/sales.html
+python -m pip install pytest
+python -m pytest
+```
+
+Готовые отчёты — HTML; PDF-экспорт в CLI не реализован.
