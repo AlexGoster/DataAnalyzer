@@ -1,193 +1,55 @@
 # DataAnalyzer
 
-Инструмент для анализа данных, визуализации и генерации отчётов.
-
-## Описание
-
-CLI-приложение на Python для анализа CSV/JSON данных: статистика, графики, отчёты в HTML/PDF.
-
-## Технологии
-
-- **Язык:** Python 3.11+
-- **Анализ:** pandas, numpy
-- **Визуализация:** matplotlib, seaborn, plotly
-- **CLI:** argparse / click
-- **Отчёты:** Jinja2, HTML
+Учебный CLI и Python-модули для анализа таблиц, построения PNG-графиков
+и генерации HTML-отчётов. Включён синтетический пример `data/sales.csv`.
 
 ## Возможности
 
-- Загрузка данных (CSV, JSON, Excel)
-- Очистка и нормализация данных
-- Статистический анализ (среднее, медиана, стандартное отклонение)
-- Визуализация: графики, гистограммы, scatter plots
-- Генерация HTML-отчётов
-- CLI с параметризацией
+- Загрузка CSV и JSON; Excel через pandas и установленные движки.
+- Сводная статистика, выбор столбцов, фильтрация и сохранение CSV в Python API.
+- Очистка пропусков и дубликатов в `analyzer.cleaner`.
+- Гистограммы для числовых столбцов; scatter plot и корреляции при наличии двух.
+- HTML-отчёт со статистикой, пропусками и типами столбцов.
+
+PDF-экспорта в CLI нет. Графики создаются отдельной командой и не включаются
+автоматически в HTML-отчёт. Выбросы не диагностируются отдельным правилом.
 
 ## Установка и запуск
 
-```bash
-# Клонирование
-git clone https://github.com/AlexGoster/DataAnalyzer.git
-cd DataAnalyzer
-
-# Установка зависимостей
-pip install -r requirements.txt
-
-# Анализ данных
-python cli.py analyze data/sales.csv
-
-# Визуализация
-python cli.py visualize data/sales.csv --output charts/
-
-# Генерация отчёта
-python cli.py report data/sales.csv --output report.html
-```
-
-## Примеры команд
+Нужен Python 3.11+. Из корня репозитория:
 
 ```bash
-# Базовый анализ
-python cli.py analyze data/sales.csv
-
-# Только числовые столбцы
-python cli.py analyze data/sales.csv
-
-# Сохранение графиков
-python cli.py visualize data/sales.csv --output ./charts
-
-# Полный отчёт
-python cli.py report data/sales.csv --output ./reports/customers.html
-```
-
-## Структура проекта
-
-```
-DataAnalyzer/
-├── cli.py               # CLI интерфейс
-├── analyzer/            # Логика анализа
-│   ├── core.py          # Основной анализ
-│   └── statistics.py    # Статистические функции
-├── visualizer.py        # Визуализация графиков
-├── report.py            # Генерация отчётов
-├── cleaner.py           # Очистка данных
-├── data/                # Примеры данных
-├── tests/               # Тесты
-├── setup.py
-└── Makefile
-```
-
-## Пример отчёта
-
-Отчёт включает:
-- Общую информацию о данных
-- Статистику по каждому столбцу
-- Графики распределения
-- Корреляционную матрицу
-- Выбросы и аномалии
-
-## Что я изучила
-
-- Работа с pandas для обработки данных
-- Визуализация данных (matplotlib, seaborn)
-- Проектирование CLI-интерфейсов
-- Генерация HTML-отчётов
-
-## License
-
-MIT License - AlexGoster
-
-
-Last updated: 2026-09-20
-
-
-Last updated: 2026-09-20
-
-
-Last updated: 2026-09-20
-
-
-Last updated: 2026-09-23
-
-
-Last updated: 2026-09-23
-
-
-Last updated: 2026-09-23
-
-
-Last updated: 2026-09-21
-
-
-Last updated: 2026-09-21
-
-
-Last updated: 2026-09-21
-
-
-Last updated: 2026-09-22
-
-
-Last updated: 2026-09-22
-
-
-Last updated: 2026-09-22
-
-
-Last updated: 2026-09-19
-
-
-Last updated: 2026-09-19
-
-
-Last updated: 2026-09-19
-
-
-Last updated: 2026-09-24
-
-
-Last updated: 2026-09-24
-
-
-Last updated: 2026-09-24
-
-
-Last updated: 2026-09-25
-
-
-Last updated: 2026-09-25
-
-
-Last updated: 2026-09-25
-
-
-Last updated: 2026-09-26
-
-
-Last updated: 2026-09-26
-
-
-Last updated: 2026-09-26
-
-
-Last updated: 2026-09-27
-
-
-Last updated: 2026-09-27
-
-
-Last updated: 2026-09-27
-
-## Проверенный запуск
-
-Пример sales.csv включён в репозиторий и содержит синтетические данные.
-
-```bash
+python -m venv .venv
+# Активируйте .venv согласно вашей ОС.
 python -m pip install -e .
+python cli.py --help
 python cli.py analyze data/sales.csv
 python cli.py visualize data/sales.csv --output charts
 python cli.py report data/sales.csv --output reports/sales.html
-python -m pip install pytest
-python -m pytest
 ```
 
-Готовые отчёты — HTML; PDF-экспорт в CLI не реализован.
+После установки также доступна команда `dataanalyzer` с теми же аргументами.
+Для старого формата `.xls` нужен дополнительный движок `xlrd`;
+для `.xlsx` зависимость `openpyxl` уже включена.
+
+## Структура
+
+| Путь | Назначение |
+| --- | --- |
+| `cli.py` | Команды analyze, visualize, report |
+| `analyzer/core.py` | Загрузка и базовые операции над таблицами |
+| `analyzer/cleaner.py` | Очистка данных |
+| `analyzer/statistics.py` | Статистические функции |
+| `analyzer/visualizer.py` | PNG-графики |
+| `analyzer/report.py` | HTML-отчёт |
+| `tests/` | Тесты и регрессионные сценарии |
+
+## Проверка
+
+```bash
+python -m pip install pytest
+python -m pytest -o addopts= -q
+```
+
+Проверяются синтетические данные, статистика, очистка, HTML и PNG.
+Результаты и ограничения предыдущей проверки — в [VERIFICATION.md](VERIFICATION.md).

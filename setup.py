@@ -11,7 +11,7 @@ setup(
     version="1.0.0",
     author="Data Analyst",
     author_email="analyst@example.com",
-    description="A production-quality data analysis toolkit",
+    description="CSV/JSON analysis, PNG charts and HTML reports",
     long_description=long_description,
     long_description_content_type="text/markdown",
     packages=find_packages(exclude=["tests", "notebooks"]),
