@@ -21,6 +21,10 @@ def cmd_visualize(args):
     v = Visualizer(args.output)
     df = a.df
     numeric_cols = list(df.select_dtypes(include="number").columns[:4])
+    if not numeric_cols:
+        raise ValueError("No numeric columns available for visualization")
+    for column in numeric_cols:
+        v.histogram(df, column)
     if len(numeric_cols) >= 2:
         v.scatter_plot(df, numeric_cols[0], numeric_cols[1])
         v.heatmap(df)
@@ -54,7 +58,10 @@ def main():
 
     args = parser.parse_args()
     if args.command:
-        args.func(args)
+        try:
+            args.func(args)
+        except (OSError, ValueError) as exc:
+            parser.exit(1, f"Error: {exc}\n")
     else:
         parser.print_help()
 

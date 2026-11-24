@@ -11,16 +11,19 @@ def drop_nulls(df: pd.DataFrame, threshold: float = 0.5) -> pd.DataFrame:
 
 
 def fill_nulls(df: pd.DataFrame, strategy: str = "mean") -> pd.DataFrame:
+    if strategy not in ("mean", "median", "zero"):
+        raise ValueError("Unknown fill strategy")
     df = df.copy()
     for col in df.select_dtypes(include="number").columns:
         if strategy == "mean":
-            df[col].fillna(df[col].mean(), inplace=True)
+            df[col] = df[col].fillna(df[col].mean())
         elif strategy == "median":
-            df[col].fillna(df[col].median(), inplace=True)
+            df[col] = df[col].fillna(df[col].median())
         elif strategy == "zero":
-            df[col].fillna(0, inplace=True)
-    for col in df.select_dtypes(include="object").columns:
-        df[col].fillna("Unknown", inplace=True)
+            df[col] = df[col].fillna(0)
+    for col in df.columns:
+        if pd.api.types.is_object_dtype(df[col]) or pd.api.types.is_string_dtype(df[col]):
+            df[col] = df[col].fillna("Unknown")
     return df
 
 
