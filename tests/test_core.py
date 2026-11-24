@@ -2,21 +2,19 @@
 
 import pytest
 import pandas as pd
-import tempfile
-from pathlib import Path
 from analyzer.core import Analyzer
 
 
 @pytest.fixture
-def sample_csv():
+def sample_csv(tmp_path):
     df = pd.DataFrame({
         "name": ["Alice", "Bob", "Charlie"],
         "age": [25, 30, 35],
         "salary": [50000, 60000, 70000],
     })
-    with tempfile.NamedTemporaryFile(suffix=".csv", delete=False) as f:
-        df.to_csv(f.name, index=False)
-        return f.name
+    path = tmp_path / "sample.csv"
+    df.to_csv(path, index=False)
+    return path
 
 
 def test_load_csv(sample_csv):

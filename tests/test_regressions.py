@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 import subprocess
 import sys
 
@@ -28,7 +29,9 @@ def test_report_escapes_title(tmp_path):
 
 
 def test_installed_console_entrypoint(tmp_path):
-    entrypoint = Path(sys.executable).with_name("dataanalyzer.exe")
+    entrypoint = Path(sys.executable).with_name(
+        "dataanalyzer.exe" if os.name == "nt" else "dataanalyzer"
+    )
     result = subprocess.run([str(entrypoint), "--help"], cwd=tmp_path,
                             capture_output=True, text=True, timeout=15)
     assert result.returncode == 0
